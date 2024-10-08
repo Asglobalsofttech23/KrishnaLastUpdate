@@ -1,0 +1,1 @@
+import{j as t,a9 as i}from"./index-BHisX-em.js";const d=({data:a,setData:r})=>{const s=o=>{const n=o.target.value.toLowerCase(),c=a.filter(l=>Object.values(l).some(e=>e&&e.toString().toLowerCase().includes(n)));r(c)};return t.jsx("div",{children:t.jsx(i,{label:"Search",onChange:s})})};export{d as S};
