@@ -176,7 +176,7 @@ module.exports = (db) => {
 
     const generateInvoiceNumber = (callback) => {
         const prefix = 'KRINV';
-        db.query('SELECT COUNT(*) as count FROM InvoiceHistory', (err, result) => {
+        db.query('SELECT COUNT(*) as count FROM invoicehistory', (err, result) => {
             if (err) {
                 return callback(err);
             }
@@ -200,7 +200,7 @@ module.exports = (db) => {
             console.log(invoice_number);
 
             const updateQuery = `
-                UPDATE InvoiceHistory
+                UPDATE invoicehistory
                 SET leads_id = ?, leads_name = ?, leads_mobile = ?, leads_email = ?, product_details = ?, total_without_tax = ?, total_with_tax = ?, paidAmount = ?, balance = ?, discount = ?, gst = ?, discountType = ?, payment_type = ?, transactionId = ?, updated_at = NOW()
                 WHERE invoice_number = ?
             `;
@@ -226,7 +226,7 @@ module.exports = (db) => {
                 const invoice_date = moment().format('YYYY-MM-DD');
 
                 const insertQuery = `
-                INSERT INTO InvoiceHistory (invoice_number, leads_id, leads_name, leads_mobile, leads_email, product_details, total_without_tax, total_with_tax,paidAmount,balance, discount, gst, discountType, payment_type, transactionId, invoice_date)
+                INSERT INTO invoicehistory (invoice_number, leads_id, leads_name, leads_mobile, leads_email, product_details, total_without_tax, total_with_tax,paidAmount,balance, discount, gst, discountType, payment_type, transactionId, invoice_date)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?, ?, ?, ?, ?, ?, ?)
                 `;
 
@@ -326,7 +326,7 @@ module.exports = (db) => {
                     q.total_without_tax, q.total_with_tax,q.paidAmount,q.balance, q.discount, q.gst, q.discountType, q.quotation_date,
                     i.invoice_number, i.invoice_date, i.payment_type, i.transactionId
                 FROM QuotationHistory q
-                LEFT JOIN InvoiceHistory i ON q.leads_id = i.leads_id
+                LEFT JOIN invoicehistory i ON q.leads_id = i.leads_id
                 WHERE q.leads_id = ?
             `;
 
@@ -359,7 +359,7 @@ module.exports = (db) => {
         console.log(`Fetching data for leads_id: ${leads_id}`);
 
         // Correct SQL query syntax
-        const query = `SELECT * FROM InvoiceHistory WHERE leads_id = ?`; // Fixed the query by adding '*'
+        const query = `SELECT * FROM invoicehistory WHERE leads_id = ?`; // Fixed the query by adding '*'
 
         try {
             // Execute the query
@@ -434,7 +434,7 @@ module.exports = (db) => {
             FROM 
                 following_leads fl
             LEFT JOIN 
-                InvoiceHistory ih ON fl.leads_id = ih.leads_id
+                invoicehistory ih ON fl.leads_id = ih.leads_id
             WHERE 
                 fl.emp_id = ? AND ih.id IS NOT NULL
         `;
@@ -503,7 +503,7 @@ module.exports = (db) => {
             FROM 
                 following_leads fl
             LEFT JOIN 
-                InvoiceHistory ih ON fl.leads_id = ih.leads_id
+                invoicehistory ih ON fl.leads_id = ih.leads_id
             WHERE 
             ih.id IS NOT NULL
         `;

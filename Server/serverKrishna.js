@@ -81,16 +81,16 @@ const uploadExcel = multer({ storage: storageExcel });
 const db = mysql.createPool({
   host: '193.203.184.74',
   port: '3306',
-  user: 'u534462265_asglobal',
+  user: 'u534462265_KrishnaDB',
   password: 'ASGlobal@12345',
-  database: 'u534462265_crm'
+  database: 'u534462265_KrishnaDB'
 })
 // const db = mysql.createPool({
 //   host: 'localhost',
 //   port: '3306',
 //   user: 'root',
 //   password: '0210',
-//   database: 'Krishna'
+//   database: 'u534462265_KrishnaDB'
 // })
 
 db.getConnection((err, connection) => {
