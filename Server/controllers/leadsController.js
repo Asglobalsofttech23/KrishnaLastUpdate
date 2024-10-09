@@ -92,7 +92,7 @@ module.exports = (db) => {
         FROM following_leads leads 
         INNER JOIN employee emp 
         ON emp.emp_id = leads.emp_id
-        WHERE leads.emp_id = ${emp_id}`;
+        WHERE leads.emp_id = ${emp_id} AND leads.call_Attended =  'Attended'`;
 
 
         if (reminderDate != 'null' && reminderDate !== undefined) {

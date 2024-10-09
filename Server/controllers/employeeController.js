@@ -216,6 +216,48 @@ module.exports = (db, transporter) => {
       res.json(results);
     });
   });
+
+  router.post('/UpdateNotattendedleads', (req, res) => {
+    const { leads, callStatus, callDiscussion, remainder, reminderDate } = req.body;
+
+
+    console.log(follow_id, callStatus, callDiscussion, remainder, reminderDate);
+
+    // Validate the inputs
+    if (!follow_id || !callStatus) {
+      return res.status(400).json({ error: 'Required fields are missing' });
+    }
+
+    // Convert "Yes" or "No" to appropriate format for the `remainder` field
+    const remainderValue = remainder === 'Yes' ? 'Yes' : 'No'; // Store as 'Yes' or 'No'
+
+    // SQL query to update the lead details in the following_leads table
+    const sql = `
+      UPDATE following_leads 
+      SET 
+        call_Attended = ?, 
+        Call_Discussion = ?, 
+        remember = ?, 
+        reminder_date = ?, 
+        updated_at = NOW()
+      WHERE 
+        follow_id = ?
+    `;
+
+    // Execute the query
+    db.query(sql, [callStatus, callDiscussion, remainderValue, reminderDate, follow_id], (err, result) => {
+      if (err) {
+        console.error('Error updating the lead:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      return res.status(200).json({ message: 'Lead updated successfully' });
+    });
+  });
+
+
+
+
+
   router.post('/enterLeave', (req, res) => {
     const { leave_date, reason } = req.body;
     const query = `INSERT INTO admin_leave (leave_date, reason) VALUES (?, ?)`;

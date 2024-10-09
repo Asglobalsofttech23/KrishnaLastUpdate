@@ -37,7 +37,7 @@ module.exports = (db) => {
                     console.error('Error fetching data:', error);
                     res.status(500).json({ message: 'Internal server error.' });
                 } else {
-                    console.log("Results from DB:", results); // Log results
+                    // console.log("Results from DB:", results); // Log results
                     res.status(200).json(results);
                 }
             });
